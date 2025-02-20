@@ -98,7 +98,11 @@ func (r *Resolver) Eval(ctx context.Context, input resolver.Input) (resolver.Res
 	}
 
 	var in *interface{}
-	if input.Input != nil {
+
+	switch {
+	case input.RawInput != nil:
+		in = input.RawInput
+	case input.Input != nil:
 		var str interface{} = []byte(input.Input.String())
 		in = &str
 	}
